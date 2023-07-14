@@ -14,8 +14,8 @@ int main(){
     
     cout << "e = endcod,d - decod" << endl;
     char select;    
-    //cin >> select;
-    select = 'd';
+    cin >> select;
+    //select = 'e';
     try
     {    
         switch(select){
