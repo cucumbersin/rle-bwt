@@ -12,6 +12,14 @@ vector<unsigned char> encode(const vector<unsigned char>& str){
     vector<unsigned char> non_repeating_elem;
     unsigned char count = 1,non_repeating_count = 0;
     for(size_t i = 1; i < str.size(); i++){
+        if(non_repeating_count == 127){
+            str_buf.push_back(non_repeating_count + 128);
+                for(auto elem:non_repeating_elem){
+                    str_buf.push_back(elem);
+                    non_repeating_count = 0;
+                }
+                non_repeating_elem.clear();
+        }
         if(str[i] == slect_elem && count < 127){
             count++;
             if(!non_repeating_elem.empty()){
@@ -35,8 +43,15 @@ vector<unsigned char> encode(const vector<unsigned char>& str){
             }
         }
     }
+    if(count == 1){
+        non_repeating_elem.push_back(slect_elem);        
+        non_repeating_count++;
+    }else{
+        str_buf.push_back(count);
+        str_buf.push_back(slect_elem);        
+    }
     if(non_repeating_count){
-        str_buf.push_back(count + 128);
+        str_buf.push_back(non_repeating_count + 128);
         for(auto elem:non_repeating_elem){
             str_buf.push_back(elem);
             non_repeating_count = 0;

@@ -35,7 +35,7 @@ vector<unsigned char> bwt_encod(const vector<unsigned char>& mas) {
 }
 
 vector<unsigned char> bwt_decod(const vector<unsigned char>& mas) {
-    vector<vector<unsigned char>> decod_mas(mas.size() - 1, vector<unsigned char>(mas.size() - 1,1));    
+    vector<vector<unsigned char>> decod_mas(mas.size() - 1, vector<unsigned char>(mas.size() - 1,0));    
     for (int j = decod_mas.size() - 1; j > -1; j--) {
         for (size_t i = 0; i < decod_mas.size(); i++) {
             decod_mas[i][j] = mas[i];            
