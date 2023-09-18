@@ -28,6 +28,13 @@ int main(){
                 cout << "not open";
                 return 0;
             }
+            string extension;
+            for (int i = file_encode_name.size() - 1; i > 0; i--)
+            {
+                if(file_encode_name[i] == '.'){
+                    extension = file_encode_name.substr(i + 1,file_encode_name.size());
+                }
+            }         
             vector<unsigned char> byt_mas,byt_mas_bwt;
             while (!encode_file.eof())
             {
@@ -57,6 +64,10 @@ int main(){
             string file_write;
             cin >> file_write;
             ofstream export_file(file_write + ".rle",std::ifstream::binary);
+            export_file << static_cast<unsigned char>(extension.size());
+            for(const auto elem : extension){
+                export_file << elem;
+            }
             for (size_t i = 0; i < mas.size(); i++)
             {
                 export_file << mas[i];
@@ -71,7 +82,13 @@ int main(){
             if(!decode_file.is_open()){
                 cout << "not open";
                 return 0;
-            }                
+            }
+            string extension;
+            int size_extension = decode_file.get();            
+            for (size_t i = 0; i < size_extension; i++)
+            {
+                extension.push_back(decode_file.get());
+            }            
             vector<unsigned char> byt_mas;
             while (!decode_file.eof())
             {
@@ -108,7 +125,7 @@ int main(){
             string file_write;
             cin >> file_write;
             //file_write = "image11";
-            ofstream export_file(file_write + ".bmp",std::ofstream::binary);
+            ofstream export_file(file_write + '.' + extension,std::ofstream::binary);
             for (size_t i = 0; i < mas_decod_bwt.size(); i++)
             {                    
                 export_file << mas_decod_bwt[i];
